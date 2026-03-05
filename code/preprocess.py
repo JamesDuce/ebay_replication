@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+
+os.makedirs('temp', exist_ok=True)
 
 # -------------------
 # Step 1: Load Data
