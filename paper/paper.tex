@@ -1,0 +1,68 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\title{The Effect of Paid Search Advertising on Revenue: \\
+A Replication of the eBay Natural Experiment}
+\author{James Duce}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Firms spend large amounts on search engine marketing (SEM), but measuring the causal effect of paid search on revenue is difficult because advertising decisions are typically endogenous to demand. This paper replicates a well-known natural experiment involving eBay, asking: what is the effect of paid search advertising on revenue? The identification strategy relies on a market-level SEM shutdown in a subset of geographic areas, allowing a difference-in-differences (DID) comparison of treated and control markets before and after the policy change.
+
+\section{Experimental Setting}
+Blake, Nosko, and Tadelis (2014) describe how eBay paused paid search advertising in selected designated market areas (DMAs) to study whether paid search generates incremental revenue or mostly cannibalizes organic traffic. Treatment began on May 22, 2012, when paid search was turned off in the treated DMAs for roughly eight weeks, while the remaining DMAs continued bidding on paid search keywords.
+
+This was not a fully randomized experiment: the largest DMAs were excluded from treatment, so treatment and control groups differ in baseline revenue levels. Because of these pre-period differences, a simple post-treatment comparison of mean revenue would be misleading. DID is appropriate here because it focuses on changes over time within each group, attributing deviations in treated markets (relative to control markets) after May 22 to the SEM shutdown, under the parallel trends assumption.
+
+\section{Data and Figures}
+The dataset contains daily revenue observations for 210 DMAs from April through July 2012. Key variables include the date, DMA identifier, an indicator for treatment group membership, an indicator for the post-treatment period, and revenue. Figures summarize average revenue patterns for treatment and control groups over time.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\textwidth]{../output/figures/figure_5_2.png}
+\caption{Average revenue for treatment and control DMAs over time.
+The dashed line marks May 22, 2012, when SEM was turned off
+for the treatment group.}
+\label{fig:revenue}
+\end{figure}
+
+Figure \ref{fig:revenue} shows that the control group has higher average revenue throughout the sample, consistent with the largest DMAs being excluded from treatment. Both groups exhibit similar weekly seasonality and broad co-movement over time. At this level scale, there is no obvious visual break in the treated series exactly at May 22, which motivates transforming the data to highlight relative differences.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\textwidth]{../output/figures/figure_5_3.png}
+\caption{Log-scale average revenue difference between control and treatment
+groups over time. The gap appears to increase after May 22.}
+\label{fig:logdiff}
+\end{figure}
+
+Figure \ref{fig:logdiff} plots the log difference (or log ratio) between control and treatment average revenue. Prior to May 22, the gap fluctuates around a relatively stable level, suggesting similar trends in the pre-period. After May 22, the gap appears to increase slightly, consistent with a modest revenue decline in treated DMAs when paid search is turned off. This pattern provides motivation for a formal DID estimate and inference.
+
+\section{Results}
+\input{../output/tables/did_table.tex}
+
+The DID estimate on the log scale is $\hat{\gamma}=-0.0066$, implying that turning off paid search reduced revenue in treated DMAs by approximately $1-\exp(-0.0066)\approx 0.66\%$. The 95\% confidence interval is $[-0.0175,\ 0.0043]$, which includes zero, so the effect is not statistically significant at the 5\% level.
+
+Economically, the point estimate is small and suggests that paid search contributes little incremental revenue for a well-known brand like eBay, where many customers may reach the site through organic search or direct navigation. The replication aligns with the qualitative conclusion in Blake et al. (2014): the overall revenue effect of brand paid search is modest and difficult to distinguish from zero in this setting.
+
+\section{Conclusion}
+This replication uses a difference-in-differences design around eBay’s 2012 paid search shutdown in selected DMAs. The estimated effect is a small, statistically insignificant decline in revenue (about 0.66\%). While the analysis supports the interpretation that paid search may have limited incremental impact for a mature brand, the setting has limitations: treatment assignment is not fully randomized, the data are scaled versions of revenue, and the DID specification is intentionally simple. Even so, the results highlight an important measurement lesson for marketing: observed paid search performance can overstate true incrementality without credible causal identification.
+
+\begin{thebibliography}{9}
+\bibitem{blake2014}
+Blake, T., C. Nosko, and S. Tadelis (2014).
+``Consumer Heterogeneity and Paid Search Effectiveness: A Large-Scale Field Experiment.''
+\textit{Econometrica}, 83(1): 155--174.
+
+\bibitem{taddy2019}
+Taddy, M. (2019).
+\textit{Business Data Science}. McGraw-Hill, Chapter 5.
+\end{thebibliography}
+
+\end{document}
